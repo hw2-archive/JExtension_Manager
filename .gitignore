@@ -1,0 +1,10 @@
+#
+# ignore file
+#
+
+#/nbproject/*
+
+/nbproject/private/
+/src/.svn/
+/src/exman/.svn/
+/src/exman/common/.svn/
