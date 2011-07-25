@@ -4,17 +4,27 @@
  */
 package exman.main.controller;
 
-private static controller instance = null;
+import exman.main.view.JFrameMain;
 
 /**
  *
  * @author giuseppe
  */
 public class ControllerJFrameMain {
+    
+    private static ControllerJFrameMain instance = null;
+    private static JFrameMain frame = null;
+    
+    private ControllerJFrameMain() {
+        frame = new JFrameMain();
+        frame.setVisible(true);
+    }
+    
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                instance = new MainClass();
+                instance = new ControllerJFrameMain();
             }
         });
     }

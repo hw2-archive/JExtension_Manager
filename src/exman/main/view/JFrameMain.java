@@ -12,6 +12,7 @@ package exman.main.view;
 
 import exman.common.MyCommonMethods;
 import exman.common.SharedDefines;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -22,6 +23,8 @@ public class JFrameMain extends javax.swing.JFrame {
     /** Creates new form JFrameMain */
     public JFrameMain() {
         initComponents();
+        initialize();
+
     }
     
     /**
@@ -35,9 +38,13 @@ public class JFrameMain extends javax.swing.JFrame {
             MyCommonMethods.setWindowCenterPosition(this);
             // ** **
             
-            setTitle("Extension Manager");
+            setTitle("JExtension Manager");
+            
+            //init combobox
+            for (String L : SharedDefines.getJavaVers()) {
+                jComboBox1.addItem(L);
+            }
 
-            jComboBox1.addItem(SharedDefines.java_ver);
     }
 
     /** This method is called from within the constructor to
@@ -54,7 +61,6 @@ public class JFrameMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -70,7 +76,7 @@ public class JFrameMain extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(501, Short.MAX_VALUE)))
+                    .addContainerGap(540, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,19 +97,8 @@ public class JFrameMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new JFrameMain().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
+    public javax.swing.JComboBox jComboBox1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

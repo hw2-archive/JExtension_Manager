@@ -16,13 +16,17 @@ import java.util.Date;
  */
 public class SharedDefines {
 
-    public static String[] java_ver={"joomla 1.5","joomla 1.6+"};
+    private static String[] java_ver={"joomla 1.5","joomla 1.6+"};
 
     // formattatore di data
     private static final SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
     private static NumberFormat valutaFormat;
     private static NumberFormat interoFormat;
+    
+    public static String[] getJavaVers() {
+        return java_ver;
+    }
 
     public static String getDataFormat(Date data) {
         return dataFormatter.format(data);

@@ -8,3 +8,5 @@
 /src/.svn/
 /src/exman/.svn/
 /src/exman/common/.svn/
+/build/
+/dist/
