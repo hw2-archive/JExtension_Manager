@@ -12,16 +12,21 @@ package exman.main.view;
 
 import exman.common.MyCommonMethods;
 import exman.common.SharedDefines;
-import javax.swing.JComboBox;
+import exman.main.controller.ControllerJFrameMain;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author giuseppe
  */
 public class JFrameMain extends javax.swing.JFrame {
+    
+    private static ControllerJFrameMain instance;
+    JFileChooser chooser;
 
     /** Creates new form JFrameMain */
-    public JFrameMain() {
+    public JFrameMain(ControllerJFrameMain instance) {
+        this.instance = instance;
         initComponents();
         initialize();
 
@@ -32,8 +37,8 @@ public class JFrameMain extends javax.swing.JFrame {
      */
     private void initialize() {
             // ** inizializzazioni necessarie per visual editor eclipse **
-            setContentPane(jPanel1);
-            setSize(new java.awt.Dimension(640, 480));
+            setContentPane(jPanelContainer);
+            setSize(new java.awt.Dimension(800, 600));
             setPreferredSize(getSize());
             MyCommonMethods.setWindowCenterPosition(this);
             // ** **
@@ -42,8 +47,15 @@ public class JFrameMain extends javax.swing.JFrame {
             
             //init combobox
             for (String L : SharedDefines.getJavaVers()) {
-                jComboBox1.addItem(L);
+                jComboBoxVerSelector.addItem(L);
             }
+            
+            //init combobox
+            for (String L : SharedDefines.getJavaExt()) {
+                jComboBoxExtSelector.addItem(L);
+            }
+            
+            
 
     }
 
@@ -56,49 +68,238 @@ public class JFrameMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
+        jPanelContainer = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanelTab1 = new javax.swing.JPanel();
+        jComboBoxVerSelector = new javax.swing.JComboBox();
+        jComboBoxExtSelector = new javax.swing.JComboBox();
+        jTextFieldExtDir = new javax.swing.JTextField();
+        jTextFieldOutputPath = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jCheckBoxZip = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jCheckBoxAdm = new javax.swing.JCheckBox();
+        jCheckBoxPub = new javax.swing.JCheckBox();
+        jButton2 = new javax.swing.JButton();
+        jPanelTab2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(640, 480));
+        setResizable(false);
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jPanelContainer.setMinimumSize(new java.awt.Dimension(640, 480));
+        jPanelContainer.setName("JPanelContainer"); // NOI18N
+        jPanelContainer.setLayout(new java.awt.BorderLayout());
+
+        jPanelTab1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jComboBoxVerSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxVerSelectorActionPerformed(evt);
             }
         });
+        jPanelTab1.add(jComboBoxVerSelector, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 211, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(540, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(295, Short.MAX_VALUE)))
-        );
+        jComboBoxExtSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxExtSelectorActionPerformed(evt);
+            }
+        });
+        jPanelTab1.add(jComboBoxExtSelector, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 211, -1));
+        jPanelTab1.add(jTextFieldExtDir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 210, 20));
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        jTextFieldOutputPath.setName("jTextFieldOutputPath"); // NOI18N
+        jTextFieldOutputPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldOutputPathActionPerformed(evt);
+            }
+        });
+        jPanelTab1.add(jTextFieldOutputPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 150, 20));
 
-        pack();
+        jButton1.setText("...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelTab1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 60, 20));
+
+        jLabel1.setText("Save In:");
+        jPanelTab1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
+
+        jCheckBoxZip.setSelected(true);
+        jCheckBoxZip.setText("Zip the folder");
+        jCheckBoxZip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxZipActionPerformed(evt);
+            }
+        });
+        jPanelTab1.add(jCheckBoxZip, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+
+        jLabel2.setText("Extension type");
+        jPanelTab1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+
+        jLabel3.setText("Joomla version");
+        jPanelTab1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        jLabel4.setText("Directory name");
+        jPanelTab1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setToolTipText("");
+        jPanel2.setName("zone"); // NOI18N
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jCheckBoxAdm.setSelected(true);
+        jCheckBoxAdm.setText("Administration");
+        jCheckBoxAdm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxAdmActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jCheckBoxAdm, java.awt.BorderLayout.PAGE_START);
+
+        jCheckBoxPub.setSelected(true);
+        jCheckBoxPub.setText("Public");
+        jPanel2.add(jCheckBoxPub, java.awt.BorderLayout.CENTER);
+
+        jPanelTab1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, 60));
+
+        jButton2.setText("Export");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanelTab1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, -1, -1));
+
+        jTabbedPane1.addTab("tab1", jPanelTab1);
+
+        jPanelTab2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jPanel1.add(jScrollPane2);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable2);
+
+        jPanel1.add(jScrollPane4);
+
+        jScrollPane3.setViewportView(jPanel1);
+
+        jPanelTab2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 466));
+
+        jTabbedPane1.addTab("tab2", jPanelTab2);
+
+        jPanelContainer.add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
+        jTabbedPane1.getAccessibleContext().setAccessibleName("tab1");
+
+        getContentPane().add(jPanelContainer, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxVerSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVerSelectorActionPerformed
+        
+    }//GEN-LAST:event_jComboBoxVerSelectorActionPerformed
+
+    private void jComboBoxExtSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxExtSelectorActionPerformed
+
+    }//GEN-LAST:event_jComboBoxExtSelectorActionPerformed
+
+    private void jCheckBoxAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAdmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jCheckBoxAdmActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Select where to save..");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+           jTextFieldOutputPath.setText(chooser.getSelectedFile().getPath());
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldOutputPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldOutputPathActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldOutputPathActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        instance.export(WIDTH, WIDTH, null, rootPaneCheckingEnabled, rootPaneCheckingEnabled, null, rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jCheckBoxZipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxZipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxZipActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox jCheckBoxAdm;
+    private javax.swing.JCheckBox jCheckBoxPub;
+    private javax.swing.JCheckBox jCheckBoxZip;
+    private javax.swing.JComboBox jComboBoxExtSelector;
+    public javax.swing.JComboBox jComboBoxVerSelector;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelContainer;
+    private javax.swing.JPanel jPanelTab1;
+    private javax.swing.JPanel jPanelTab2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldExtDir;
+    private javax.swing.JTextField jTextFieldOutputPath;
     // End of variables declaration//GEN-END:variables
 }

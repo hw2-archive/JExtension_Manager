@@ -17,6 +17,7 @@ import java.util.Date;
 public class SharedDefines {
 
     private static String[] java_ver={"joomla 1.5","joomla 1.6+"};
+    private static String[] java_ext={"Themes","Plugins","Modules","Components"};
 
     // formattatore di data
     private static final SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -26,6 +27,10 @@ public class SharedDefines {
     
     public static String[] getJavaVers() {
         return java_ver;
+    }
+    
+    public static String[] getJavaExt() {
+        return java_ext;
     }
 
     public static String getDataFormat(Date data) {

@@ -12,12 +12,14 @@ import exman.main.view.JFrameMain;
  */
 public class ControllerJFrameMain {
     
-    private static ControllerJFrameMain instance = null;
+    public static ControllerJFrameMain instance = null;
     private static JFrameMain frame = null;
+   
     
     private ControllerJFrameMain() {
-        frame = new JFrameMain();
+        frame = new JFrameMain(this);
         frame.setVisible(true);
+      
     }
     
     
@@ -28,4 +30,9 @@ public class ControllerJFrameMain {
             }
         });
     }
+    
+    public void export(int ver,int type,String folderName,boolean isAdmin,boolean isPub,String path,boolean isZip) {
+        
+    }
+    
 }

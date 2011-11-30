@@ -1,0 +1,7 @@
+ora , il nostro JExtension_manager avrˆ due compiti , che svilupperemo in questo ordine:
+1) estrapolazione del componente da un sito in funzione, ad un pacchetto pronto per l'installazione su un altro sito ( e quindi la logica del programma raccoglie tutti i dati : files, autore , versione , database ecc.. e pacchettizza )
+2) creazione "from the scratch" di un componente ( praticamente aprendo il manager uno pu˜ anche compilare i campi manualmente e il manager crea automaticamente un componente vuoto pronto per lo sviluppo )
+riguardo il secondo punto, c' giˆ un tool (open source se non erro) che fa questo...per˜ non permette poi di esportare il componente come nel punto primo
+
+IMPORTANTE: andate su DropBox -> Preferences -> Advanced -> Select Syncr -> Change Settings -> (selezionate modalitˆ avanzata)
+dopo di che disabilitate dalla sincronizzazione la cartella "private" (shared_works/JExtensionManager/nbproject)
