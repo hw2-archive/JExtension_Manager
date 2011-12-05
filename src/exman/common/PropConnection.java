@@ -1,37 +1,29 @@
 package exman.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
 public class PropConnection {
-
-	public final String DB_NAME = "cartoleria";
 	
 	Properties  prop = null;
+    String conn = null;
 	
-	public PropConnection() {
+	public PropConnection(String host,String dbname, String username,String password) {
 		prop = new Properties();
-
-		try {
-			prop.load(new FileInputStream(new File("properties/connection.properties")));
-		} catch(IOException ioe) {
-			JOptionPane.showMessageDialog(null, "Connetti l'unita' di rete", "Avviso", JOptionPane.WARNING_MESSAGE);
-			System.exit(0);
-		}
+        prop.setProperty("connection", "jdbc:mysql://");
+        prop.setProperty("server", host);
+        prop.setProperty("username", username);
+        prop.setProperty("password", password);
+        prop.setProperty("dbname", dbname);
+        
+        		
+		conn = prop.getProperty("connection");
+		conn = conn+prop.getProperty("server")+"/";
+		conn = conn+prop.getProperty("dbname");	
 	}
 	
-	public String getConnection(String dbName) {
-//		jdbc:mysql://192.168.1.40:3306/dbName
-		
-		String conn = prop.getProperty("connection");
-		conn = conn+prop.getProperty("server")+":";
-		conn = conn+prop.getProperty("port")+"/";
-		conn = conn+dbName;		
-		
+	public String getConnection() {
 		return conn;
 	}
 	
@@ -54,10 +46,7 @@ public class PropConnection {
 	}
 	
 	public String getPassword() {
-		return "root";
+		return prop.getProperty("password");
 	}
 	
-	public String getMDB_Legacy() {
-		return prop.getProperty("MDB_Legacy");
-	}
 }

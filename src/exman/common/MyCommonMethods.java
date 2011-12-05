@@ -2,16 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package exman.common;
 
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
@@ -28,11 +30,12 @@ public class MyCommonMethods {
      * @param selectedRow   la riga selezionata
      * @return -1 se la riga non esiste, altrimenti restituisce il corrispondente indice del vettore
      */
-    public static int getListIndexFromTable(javax.swing.JTable jTable,int selectedRow) {
+    public static int getListIndexFromTable(javax.swing.JTable jTable, int selectedRow) {
         int modelRow = 0;
 
-        if(selectedRow < 0 || selectedRow >= jTable.getRowCount())
-                return -1;
+        if (selectedRow < 0 || selectedRow >= jTable.getRowCount()) {
+            return -1;
+        }
 
         int viewRow = selectedRow;
 
@@ -42,7 +45,7 @@ public class MyCommonMethods {
 
         return modelRow;
     }
-    
+
     /**
      * Metodo per clonare una lista
      * 
@@ -54,24 +57,24 @@ public class MyCommonMethods {
 
         // Tipo Aggiungi
         dest.addAll(src);
-        
+
         // Tipo Copy
         //Collections.copy(dest,src);
 
         // Tipo Clone ( esegue un copyOf )
         //ArrayList<T> tmp  = (ArrayList<T>) src;
         //dest = (List<T>) tmp.clone();
-        
+
         // Passaggio lista al nuovo array ( esegue un copyOf )
         // dest = new ArrayList<T>(src);
     }
 
     public static void setWindowCenterPosition(Frame frame) {
-        setWindowCenterPosition((Window)frame);
+        setWindowCenterPosition((Window) frame);
     }
 
     public static void setWindowCenterPosition(Dialog frame) {
-        setWindowCenterPosition((Window)frame);
+        setWindowCenterPosition((Window) frame);
     }
 
     /**
@@ -79,10 +82,9 @@ public class MyCommonMethods {
      * 
      * @param frame il frame da centrare
      */
-    public static void setWindowCenterPosition(Window frame)
-    {
+    public static void setWindowCenterPosition(Window frame) {
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setBounds((screenSize.width-frame.getHeight())/2, (screenSize.height-frame.getWidth())/2, frame.getWidth(), frame.getHeight());
+        frame.setBounds((screenSize.width - frame.getHeight()) / 2, (screenSize.height - frame.getWidth()) / 2, frame.getWidth(), frame.getHeight());
     }
 
     /**
@@ -94,16 +96,18 @@ public class MyCommonMethods {
      * @param comparator lista che contiene i dati per effettuare la ricerca
      * @return una nuova lista che a'� il risultato dell'esclusione dei dati di list dal comparator
      */
-    public <T extends Comparable<T>> List<T> listBinaryExclusion(List<T> list,List<T> comparator) {
+    public <T extends Comparable<T>> List<T> listBinaryExclusion(List<T> list, List<T> comparator) {
         List<T> result = new ArrayList<T>();
         List<T> copiedList = new ArrayList<T>();
-        
-        cloneList(copiedList,list);
+
+        cloneList(copiedList, list);
         if (list != null) {
             Collections.sort(copiedList); // viene ordinata la copia ma non la lista originale
-            for (T D: comparator)
-                if(Collections.binarySearch(copiedList, D, null)<0)
+            for (T D : comparator) {
+                if (Collections.binarySearch(copiedList, D, null) < 0) {
                     result.add(D);
+                }
+            }
         }
         return result;
     }
@@ -116,12 +120,13 @@ public class MyCommonMethods {
      * @param list lista da ingrandire
      * @param multipler moltiplica la dimensione della lista per il valore passato
      */
-    public  <T> void ListCacheBenchmark(List<T> list,int multipler) {
-        List <T> copy = new ArrayList<T>();
-        cloneList(copy,list);
-        
-        for (int i=0; i<multipler;i++)
+    public <T> void ListCacheBenchmark(List<T> list, int multipler) {
+        List<T> copy = new ArrayList<T>();
+        cloneList(copy, list);
+
+        for (int i = 0; i < multipler; i++) {
             list.addAll(copy);
+        }
     }
 
     /**
@@ -131,18 +136,83 @@ public class MyCommonMethods {
      * @param frame
      * @param internal
      */
-    public static void setWindowMode(JInternalFrame iFrame, JFrame frame,boolean isInternal) {
+    public static void setWindowMode(JInternalFrame iFrame, JFrame frame, boolean isInternal) {
         // mostra una delle due finestre
         iFrame.setVisible(isInternal);
         frame.setVisible(!isInternal);
         // setta il contentpane all'internal frame o al frame esterno
         Container cPane = frame.getContentPane();
-        if (isInternal)
+        if (isInternal) {
             iFrame.setContentPane(cPane);
-        else
+        } else {
             frame.setContentPane(cPane);
+        }
         // il frame esterno necessita di un aggiornamento
         frame.getRootPane().updateUI();
     }
 
+    /**
+     * 
+     * @param fileName
+     * @param phrase
+     * @return
+     * @throws FileNotFoundException 
+     */
+    public static String readPhpConf(String fileName, String phrase) {
+        Scanner fileScanner;
+        try {
+            fileScanner = new Scanner(new File(fileName));
+        } catch (FileNotFoundException ex) {
+            return "";
+        }
+
+        while (fileScanner.hasNextLine()) {
+            String line = fileScanner.nextLine();
+            int index = line.lastIndexOf(phrase + " ");
+            if (index == -1) {
+                index = line.lastIndexOf(phrase + "=");
+            }
+
+            if (index >= 0) {
+                int begin = 0, end = 0;
+                index += phrase.length();
+
+                char startchr = '0';
+                while ((startchr != '\'' && startchr != '"') && line.length() >= index) {
+                    startchr = line.charAt(index);
+                    index++;
+                }
+
+                if (startchr == '\'' || startchr == '"') {
+                    begin = index;
+                    boolean found = false;
+                    while (!found && line.length() >= index) {
+                        if (line.charAt(index) == startchr) {
+                            boolean quit = false;
+                            end = index;
+                            while (!quit && line.length() >= index) {
+                                // improve better algorithm
+                                index++;
+                                if (line.charAt(index) == ' ') {
+                                    continue;
+                                } else if (line.charAt(index) == ';') {
+                                    found = true;
+                                    quit = true;
+                                } else {
+                                    quit = true;
+                                }
+
+                            }
+                        }
+                        index++;
+                    }
+
+                    if (found) {
+                        return line.substring(begin, end);
+                    }
+                }
+            }
+        }
+        return "";
+    }
 }

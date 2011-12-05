@@ -15,7 +15,8 @@ import java.util.Date;
  * @author Giuseppe
  */
 public class SharedDefines {
-
+    private static String fileSep=System.getProperty("file.separator").toString();
+    
     private static String[] java_ver={"joomla 1.5","joomla 1.6+"};
     private static String[] java_ext={"Themes","Plugins","Modules","Components"};
 
@@ -24,6 +25,10 @@ public class SharedDefines {
 
     private static NumberFormat valutaFormat;
     private static NumberFormat interoFormat;
+    
+    public static String getFileSep() {
+        return fileSep;
+    }
     
     public static String[] getJavaVers() {
         return java_ver;
