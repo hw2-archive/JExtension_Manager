@@ -2,65 +2,42 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package exman.common;
-
-import java.math.RoundingMode;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
- * @author Giuseppe
+ * @author giuseppe
  */
 public class SharedDefines {
-    private static String fileSep=System.getProperty("file.separator").toString();
     
-    private static String[] java_ver={"joomla 1.5","joomla 1.6+"};
-    private static String[] java_ext={"Themes","Plugins","Modules","Components"};
-
-    // formattatore di data
-    private static final SimpleDateFormat dataFormatter = new SimpleDateFormat("dd/MM/yyyy");
-
-    private static NumberFormat valutaFormat;
-    private static NumberFormat interoFormat;
-    
-    public static String getFileSep() {
-        return fileSep;
-    }
-    
-    public static String[] getJavaVers() {
-        return java_ver;
-    }
-    
-    public static String[] getJavaExt() {
-        return java_ext;
-    }
-
-    public static String getDataFormat(Date data) {
-        return dataFormatter.format(data);
-    }
-
-    public static NumberFormat getValutaFormat() {
-        if(valutaFormat == null) {
-            valutaFormat = NumberFormat.getNumberInstance();
-            valutaFormat.setMaximumFractionDigits(2);
-            valutaFormat.setGroupingUsed(false);
-            valutaFormat.setRoundingMode(RoundingMode.HALF_UP);
+    public enum emJava_ver {
+        J_15("joomla 1.5"),
+        LATEST("joomla 1.6");
+        
+        private emJava_ver (String ver) {
+            this.version = ver;
         }
-
-        return valutaFormat;
+        
+        public String version = null;
     }
-
-    public static NumberFormat getInteroFormat() {
-        if(interoFormat == null) {
-            interoFormat = NumberFormat.getNumberInstance();
-            interoFormat.setMaximumFractionDigits(0);
-            interoFormat.setGroupingUsed(false);
-            interoFormat.setRoundingMode(RoundingMode.HALF_UP);
+    /* string alternative
+     * private static String[] java_ver={
+        "joomla 1.5", // 0
+        "joomla 1.6+" // 1
+    };*/
+    
+    public enum emJava_ext {
+        THEMES("Themes"),
+        PLUGINS("Plugins"),
+        MODULES("Modules"),
+        COMPONENTS("Components");
+        
+        private emJava_ext (String ver) {
+            this.type = ver;
         }
-
-        return interoFormat;
+        
+        public String type = null;
     }
+    
+    
 }

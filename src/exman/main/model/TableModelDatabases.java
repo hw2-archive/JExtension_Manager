@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import exman.common.PropConnection;
+import hw2.common.PropConnection;
 import exman.main.persistence.HandlerMainQuery;
 import java.util.Arrays;
 

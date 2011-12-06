@@ -4,15 +4,12 @@
  */
 package exman.main.controller;
 
-import exman.common.MyCommonMethods;
-import exman.common.PropConnection;
-import exman.common.SharedDefines;
+import hw2.common.MyCommonMethods;
+import hw2.common.PropConnection;
+import hw2.common.MyDefines;
 import exman.main.model.TableModelDatabases;
-import exman.main.persistence.HandlerMainQuery;
 import exman.main.view.JFrameMain;
 import java.util.ArrayList;
-import java.util.Vector;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,23 +24,23 @@ public class ControllerJFrameMain {
 
     private ControllerJFrameMain() {
         tableModelDatabases = new TableModelDatabases();
-        
+
         frame = new JFrameMain(this);
         frame.setVisible(true);
     }
-    
+
     public PropConnection getPropConn(String rootPath) {
-        
+
         if (propConn == null) {
-            String confPath = rootPath+SharedDefines.getFileSep()+"configuration.php";
-            String user = MyCommonMethods.readPhpConf(confPath,"$user");
-            String password = MyCommonMethods.readPhpConf(confPath,"$password");
-            String dbName = MyCommonMethods.readPhpConf(confPath,"$db");
-            String host = MyCommonMethods.readPhpConf(confPath,"$host");
-            
-            propConn = new PropConnection(host,dbName,user,password);
+            String confPath = rootPath + MyDefines.getFileSep() + "configuration.php";
+            String user = MyCommonMethods.readPhpConf(confPath, "$user");
+            String password = MyCommonMethods.readPhpConf(confPath, "$password");
+            String dbName = MyCommonMethods.readPhpConf(confPath, "$db");
+            String host = MyCommonMethods.readPhpConf(confPath, "$host");
+
+            propConn = new PropConnection(host, dbName, user, password);
         }
-        
+
         return propConn;
     }
 

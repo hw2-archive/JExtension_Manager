@@ -5,9 +5,9 @@
 
 package exman.main.model;
 
-import exman.common.FieldModel;
-import exman.common.FieldModelStruct;
-import exman.common.MyDBMethods;
+import hw2.common.FieldModel;
+import hw2.common.FieldModelStruct;
+import hw2.common.MyDBMethods;
 
 /**
  *

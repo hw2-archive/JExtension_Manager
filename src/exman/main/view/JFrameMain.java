@@ -10,9 +10,10 @@
  */
 package exman.main.view;
 
-import exman.common.MyCommonMethods;
 import exman.common.SharedDefines;
 import exman.main.controller.ControllerJFrameMain;
+import hw2.common.MyCommonMethods;
+import hw2.common.MyDefines;
 import javax.swing.JFileChooser;
 
 /**
@@ -44,15 +45,13 @@ public class JFrameMain extends javax.swing.JFrame {
             // ** **
             
             setTitle("JExtension Manager");
-            
-            //init combobox
-            for (String L : SharedDefines.getJavaVers()) {
-                jComboBoxVerSelector.addItem(L);
+
+            for (SharedDefines.emJava_ver L: SharedDefines.emJava_ver.values()) {
+                jComboBoxVerSelector.addItem(L.version);
             }
             
-            //init combobox
-            for (String L : SharedDefines.getJavaExt()) {
-                jComboBoxExtSelector.addItem(L);
+            for (SharedDefines.emJava_ext L: SharedDefines.emJava_ext.values()) {
+                jComboBoxVerSelector.addItem(L.type);
             }
             
             jTableDBList.setModel(instance.tableModelDatabases);

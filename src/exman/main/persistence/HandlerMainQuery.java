@@ -4,8 +4,8 @@
  */
 package exman.main.persistence;
 
-import exman.common.MyDBConnection;
-import exman.common.PropConnection;
+import hw2.common.MyDBConnection;
+import hw2.common.PropConnection;
 import exman.main.model.BeanDatabases;
 import java.sql.SQLException;
 import java.util.ArrayList;
