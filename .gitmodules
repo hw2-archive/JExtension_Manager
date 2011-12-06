@@ -1,0 +1,3 @@
+[submodule "src/hw2/common"]
+	path = src/hw2/common
+	url = git@github.com:HyperWeb2/hw2JavaLib.git
