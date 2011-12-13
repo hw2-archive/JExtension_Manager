@@ -8,6 +8,7 @@ import exman.common.SharedDefines;
 import hw2.common.MyDBConnection;
 import hw2.common.PropConnection;
 import exman.main.model.BeanDatabases;
+import exman.main.model.FieldsModelDatabases;
 import hw2.common.MysqlBackup;
 import java.io.File;
 import java.sql.SQLException;
@@ -19,42 +20,44 @@ import java.util.List;
  * @author giuseppe
  */
 public class HandlerMainQuery {
-    
-    public List<BeanDatabases> LoadTables(String searchText,PropConnection propConn) {
-            List<BeanDatabases> V = null;
-            MyDBConnection myConn = new MyDBConnection(propConn);
 
-            try {
-                    // searchtext is useless here
-                
-                    myConn.setRs(myConn.getConn().getMetaData().getTables(null, null, null, new String[]{"TABLE"}));
+    FieldsModelDatabases.emDatabases em;
 
-                    // inizializza oggetto lista
-                    V = new ArrayList<BeanDatabases> ();
-                    int id=0;
-                    while (myConn.getRs().next()) {
-                            BeanDatabases bean = new BeanDatabases();
-                            bean.setId(id);
-                            bean.setNome(myConn.getRs().getString("TABLE_NAME"));
-                            //bean.setStato(myConn.rs.getInt("ordine.stato"));
-                            V.add(bean);
-                            id++;
-                    }
+    public List<BeanDatabases> LoadTables(String searchText, PropConnection propConn) {
+        List<BeanDatabases> V = null;
+        MyDBConnection myConn = new MyDBConnection(propConn);
 
-            } catch (SQLException ex) {
-                    ex.printStackTrace();
+        try {
+            // searchtext is useless here
 
-            }finally {
-                    myConn.releaseAll();
+            myConn.setRs(myConn.getConn().getMetaData().getTables(null, null, null, new String[]{"TABLE"}));
+
+            // inizializza oggetto lista
+            V = new ArrayList<BeanDatabases>();
+            int id = 0;
+            while (myConn.getRs().next()) {
+                BeanDatabases bean = new BeanDatabases();
+                bean.setId(id);
+                bean.setNome(myConn.getRs().getString(em.NOME.getStruct().getField()));
+                //bean.setStato(myConn.rs.getInt("ordine.stato"));
+                V.add(bean);
+                id++;
             }
 
-            return V;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        } finally {
+            myConn.releaseAll();
+        }
+
+        return V;
     }
 
-    public void exportTable( ArrayList<String> tables, PropConnection propConn,String filePath) {
+    public void exportTable(ArrayList<String> tables, PropConnection propConn, String filePath) {
         //MyDBConnection myConn = new MyDBConnection(propConn);   
         //db2sql.dumpDB(tables, myConn.getConn(),filePath+File.separator+"mod.sql");
-        MysqlBackup backup = new MysqlBackup(propConn.getServer(), Integer.toString(propConn.getPort()), propConn.getUsername(), propConn.getPassword(), propConn.getDatabase() , tables);
-        backup.data_to_file(filePath+File.separator+SharedDefines.getSqlInstFileName());
+        MysqlBackup backup = new MysqlBackup(propConn.getServer(), Integer.toString(propConn.getPort()), propConn.getUsername(), propConn.getPassword(), propConn.getDatabase(), tables);
+        backup.data_to_file(filePath + File.separator + SharedDefines.getSqlInstFileName());
     }
 }

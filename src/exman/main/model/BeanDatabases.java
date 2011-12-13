@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package exman.main.model;
 
 public class BeanDatabases implements Comparable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
     private int id = -1;
     private String nome = "";
-    
+
     public BeanDatabases() {
     }
 
@@ -41,10 +40,10 @@ public class BeanDatabases implements Comparable {
 
     // necessaria per il binary search
     public int compareTo(Object o) {
-        if (!(o instanceof BeanDatabases))
+        if (!(o instanceof BeanDatabases)) {
             throw new UnsupportedOperationException("Not supported yet.");
+        }
         BeanDatabases tmp = (BeanDatabases) o;
         return this.id - tmp.id;
     }
-
 }

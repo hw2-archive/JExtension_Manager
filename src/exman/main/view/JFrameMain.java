@@ -15,13 +15,12 @@ import hw2.common.MyCommonMethods;
 import java.io.File;
 import javax.swing.JFileChooser;
 
-
 /**
  *
  * @author giuseppe
  */
 public class JFrameMain extends javax.swing.JFrame {
-    
+
     private static ControllerJFrameMain instance;
     JFileChooser chooser;
 
@@ -32,29 +31,29 @@ public class JFrameMain extends javax.swing.JFrame {
         initialize();
 
     }
-    
+
     /**
      * Initialize the class.
      */
     private void initialize() {
-            // ** inizializzazioni necessarie per visual editor eclipse **
-            setContentPane(jPanelContainer);
-            setSize(new java.awt.Dimension(800, 600));
-            setPreferredSize(getSize());
-            MyCommonMethods.setWindowCenterPosition(this);
-            // ** **
-            
-            setTitle("JExtension Manager");
+        // ** inizializzazioni necessarie per visual editor eclipse **
+        setContentPane(jPanelContainer);
+        setSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(getSize());
+        MyCommonMethods.setWindowCenterPosition(this);
+        // ** **
 
-            /*for (SharedDefines.emJava_ver L: SharedDefines.emJava_ver.values()) {
-                jComboBoxVerSelector.addItem(L.version);
-            }
-            
-            for (SharedDefines.emJava_ext L: SharedDefines.emJava_ext.values()) {
-                jComboBoxVerSelector.addItem(L.type);
-            }*/
-            
-            jTableDBList.setModel(instance.tableModelDatabases);
+        setTitle("JExtension Manager");
+
+        /*for (SharedDefines.emJava_ver L: SharedDefines.emJava_ver.values()) {
+        jComboBoxVerSelector.addItem(L.version);
+        }
+        
+        for (SharedDefines.emJava_ext L: SharedDefines.emJava_ext.values()) {
+        jComboBoxVerSelector.addItem(L.type);
+        }*/
+
+        jTableDBList.setModel(instance.tableModelDatabases);
 
     }
 
@@ -177,7 +176,6 @@ public class JFrameMain extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableDBList.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTableDBList);
         jTableDBList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jTableDBList.getColumnModel().getColumn(0).setResizable(false);
@@ -286,14 +284,14 @@ public class JFrameMain extends javax.swing.JFrame {
         chooser.setAcceptAllFileFilterUsed(false);
         //    
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-           jTextFieldXmlPath.setText(chooser.getSelectedFile().getPath());
-           jButtonExport.setEnabled(false);
-           
-           if (!jCheckBox1.isSelected()) {
-               String confPath = MyCommonMethods.getParentDirectory(jTextFieldXmlPath.getText(), 4)+File.separator+"configuration.php";
-               jTextFieldConfPath.setText(confPath);
-           }
-           
+            jTextFieldXmlPath.setText(chooser.getSelectedFile().getPath());
+            jButtonExport.setEnabled(false);
+
+            if (!jCheckBox1.isSelected()) {
+                String confPath = MyCommonMethods.getParentDirectory(jTextFieldXmlPath.getText(), 4) + File.separator + "configuration.php";
+                jTextFieldConfPath.setText(confPath);
+            }
+
         } else {
             System.out.println("No Selection ");
         }
@@ -315,7 +313,7 @@ public class JFrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxZipActionPerformed
 
     private void jButtonLoadTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadTablesActionPerformed
-        instance.loadInfo(jTextFieldXmlPath.getText(),jTextFieldConfPath.getText());
+        instance.loadInfo(jTextFieldXmlPath.getText(), jTextFieldConfPath.getText());
     }//GEN-LAST:event_jButtonLoadTablesActionPerformed
 
     private void jButtonSaveFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveFCActionPerformed
@@ -330,7 +328,7 @@ public class JFrameMain extends javax.swing.JFrame {
         chooser.setAcceptAllFileFilterUsed(false);
         //    
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-           jTextFieldOutputPath.setText(chooser.getSelectedFile().getPath());
+            jTextFieldOutputPath.setText(chooser.getSelectedFile().getPath());
         } else {
             System.out.println("No Selection ");
         }
@@ -348,12 +346,12 @@ public class JFrameMain extends javax.swing.JFrame {
         chooser.setAcceptAllFileFilterUsed(false);
         //    
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-           jTextFieldConfPath.setText(chooser.getSelectedFile().getPath());
-           jButtonExport.setEnabled(false);
+            jTextFieldConfPath.setText(chooser.getSelectedFile().getPath());
+            jButtonExport.setEnabled(false);
         } else {
             System.out.println("No Selection ");
         }
-        
+
     }//GEN-LAST:event_jButtonConfFC1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -365,7 +363,6 @@ public class JFrameMain extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         instance.tableModelDatabases.cleanList();
     }//GEN-LAST:event_jButton3ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonConfFC1;

@@ -11,10 +11,16 @@ import exman.main.model.TableModelDatabases;
 import exman.main.persistence.HandlerMainQuery;
 import exman.main.view.JFrameMain;
 import hw2.common.MyXML;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -54,35 +60,51 @@ public class ControllerJFrameMain {
             }
         });
     }
-    
+
+    private void createSqlUninstaller(ArrayList<String> tables, String outPath) {
+
+        String query = "DROP TABLE ";
+        query += StringUtils.arrayToDelimitedString(tables.toArray(), ",\n");
+        query += ";";
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(outPath));
+            out.write(query);
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ControllerJFrameMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void exportTables(String outPath) {
         ArrayList<String> tables = new ArrayList<String>();
-        for (int i: frame.jTableDBList.getSelectedRows() ) {
-            tables.add(frame.jTableDBList.getValueAt(i, 0).toString());  
+        for (int i : frame.jTableDBList.getSelectedRows()) {
+            tables.add(frame.jTableDBList.getValueAt(i, 0).toString());
         }
-        new HandlerMainQuery().exportTable(tables,propConn,outPath);
-        
-        MyXML outXml = new MyXML(outPath+MyCommonMethods.getFullFileName(xmlPath));
-        
-        Element parent = outXml.writeElement("install","", null,null,true);
-        parent = outXml.writeElement("sql", "", null, parent , true);
+
+        new HandlerMainQuery().exportTable(tables, propConn, outPath);
+        createSqlUninstaller(tables, outPath + File.separator + SharedDefines.getSqlUninstFileName());
+
+        MyXML outXml = new MyXML(outPath + MyCommonMethods.getFullFileName(xmlPath));
+
+        Element parent = outXml.writeElement("install", "", null, null, true);
+        parent = outXml.writeElement("sql", "", null, parent, true);
         ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-        attributes.add(new Attribute("charset","utf8"));
-        attributes.add(new Attribute("driver","mysql"));
-        outXml.writeElement("file", "install_mod.sql",attributes,parent, true);
+        attributes.add(new Attribute("charset", "utf8"));
+        attributes.add(new Attribute("driver", "mysql"));
+        outXml.writeElement("file", "install_mod.sql", attributes, parent, true);
         attributes = new ArrayList<Attribute>();
-        attributes.add(new Attribute("driver","mysql"));
-        outXml.writeElement("file", SharedDefines.getSqlInstFileName(),attributes,parent, true);
-        
-        parent = outXml.writeElement("uninstall","", null, null,true);
-        parent = outXml.writeElement("sql", "", null, parent , true);
+        attributes.add(new Attribute("driver", "mysql"));
+        outXml.writeElement("file", SharedDefines.getSqlInstFileName(), attributes, parent, true);
+
+        parent = outXml.writeElement("uninstall", "", null, null, true);
+        parent = outXml.writeElement("sql", "", null, parent, true);
         attributes = new ArrayList<Attribute>();
-        attributes.add(new Attribute("charset","utf8"));
-        attributes.add(new Attribute("driver","mysql"));
-        outXml.writeElement("file", "uninstall_mod.sql",attributes,parent, true);
+        attributes.add(new Attribute("charset", "utf8"));
+        attributes.add(new Attribute("driver", "mysql"));
+        outXml.writeElement("file", "uninstall_mod.sql", attributes, parent, true);
         attributes = new ArrayList<Attribute>();
-        attributes.add(new Attribute("driver","mysql"));
-        outXml.writeElement("file", SharedDefines.getSqlUninstFileName(),attributes,parent, true);
+        attributes.add(new Attribute("driver", "mysql"));
+        outXml.writeElement("file", SharedDefines.getSqlUninstFileName(), attributes, parent, true);
     }
 
     public void loadInfo(String xmlPath, String confPath) {
@@ -120,13 +142,24 @@ public class ControllerJFrameMain {
                 String dbName = MyCommonMethods.readPhpConf(confPath, "$db");
                 String host = MyCommonMethods.readPhpConf(confPath, "$host");
 
-                propConn = new PropConnection(host, dbName, user, password,true);
+                propConn = new PropConnection(host, dbName, user, password, true);
 
                 tableModelDatabases.cleanList();
                 tableModelDatabases.refreshList(0, "", propConn);
             }
 
-            //XXX implements read <table> node
+            //XXX implements reading table with #__ special char
+            //cell selection must be disabled and rowselection enabled
+            Element tableSection = xml.getFirstElementByTag("tables", null);
+            if (tableSection != null) {
+                ArrayList<String> tables = xml.getElementsValues(xml.getElementsByTag("table", tableSection), null);
+
+                for (String T : tables) {
+                    int coord[] = MyCommonMethods.search(frame.jTableDBList, T, 0, -1);
+                    //because single col
+                    frame.jTableDBList.addRowSelectionInterval(coord[1], coord[1]);
+                }
+            }
 
             frame.jButtonExport.setEnabled(true);
         }
@@ -162,7 +195,7 @@ public class ControllerJFrameMain {
                     MyCommonMethods.copyFileOrFolder(basePath + type + sep + extFolder + sep + file, outPath + file, "");
                 }
             }
-            
+
             Element instSection = xml.getFirstElementByTag("sql", xml.getFirstElementByTag("install", null));
             Element uninstSection = xml.getFirstElementByTag("sql", xml.getFirstElementByTag("uninstall", null));
 
@@ -243,9 +276,9 @@ public class ControllerJFrameMain {
         String outFolder = outPath + sep + extFolder + sep;
 
         // copy the xml also to create the path 
-        MyCommonMethods.deleteDir(outFolder,null);
+        MyCommonMethods.deleteDir(outFolder, null);
         MyCommonMethods.copyFileOrFolder(xmlPath, outFolder + sep + MyCommonMethods.getFullFileName(xmlPath), "");
-         if ((new File(outFolder)).exists()) {
+        if ((new File(outFolder)).exists()) {
             if (extClient != null) {
                 if (extClient.equalsIgnoreCase("administrator")) {
                     processXml(adminPath, outFolder, true);
@@ -257,7 +290,7 @@ public class ControllerJFrameMain {
                 processXml(rootPath + sep, outFolder, false);
             }
         }
-         
+
         exportTables(outFolder);
     }
 }
