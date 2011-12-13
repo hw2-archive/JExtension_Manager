@@ -8,17 +8,39 @@ package exman.common;
  *
  * @author giuseppe
  */
-public class SharedDefines {
+public class SharedDefines {   
+    
+    private static final String sqlInstFileName = "install_mod.sql";
+    private static final String sqlUninstFileName = "uninstall_mod.sql";
+    
+    public static String getSqlInstFileName() {
+        return sqlInstFileName;
+    }
+
+    public static String getSqlUninstFileName() {
+        return sqlUninstFileName;
+    }
     
     public enum emJava_ver {
-        J_15("joomla 1.5"),
-        LATEST("joomla 1.6");
+        J_15("1.5.0",true),
+        LATEST("1.6.0",false);
         
-        private emJava_ver (String ver) {
+        private emJava_ver (String ver, boolean extPrefix) {
             this.version = ver;
+            this.extPrefix = extPrefix;
         }
         
-        public String version = null;
+        private String version = null;
+        private boolean extPrefix;
+
+        public boolean hasExtPrefix() {
+            return extPrefix;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
     }
     /* string alternative
      * private static String[] java_ver={
@@ -27,16 +49,26 @@ public class SharedDefines {
     };*/
     
     public enum emJava_ext {
-        THEMES("Themes"),
-        PLUGINS("Plugins"),
-        MODULES("Modules"),
-        COMPONENTS("Components");
+        template("templates",""),
+        plugin("plugins",""),
+        module("modules","mod_"),
+        component("components","com_");
         
-        private emJava_ext (String ver) {
-            this.type = ver;
+        private emJava_ext (String folder, String prefix) {
+            this.folder = folder;
+            this.prefix = prefix;
         }
         
-        public String type = null;
+        private String folder = null;
+        private String prefix = null;
+
+        public String getPrefix() {
+            return prefix;
+        }
+        
+        public String getFolder() {
+            return folder;
+        }
     }
     
     

@@ -60,6 +60,11 @@ public class TableModelDatabases extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+    public void cleanList() {
+        listaDatabases = Arrays.asList(new BeanDatabases());
+        fireTableDataChanged();
+    }
+    
     public List<BeanDatabases> getList() {
     	return listaDatabases;
     }
