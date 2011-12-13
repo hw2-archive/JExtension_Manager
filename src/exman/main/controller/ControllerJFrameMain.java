@@ -290,7 +290,12 @@ public class ControllerJFrameMain {
                 processXml(rootPath + sep, outFolder, false);
             }
         }
-
+        //XXX to speed up
         exportTables(outFolder);
+
+        if (isZip) {
+            MyCommonMethods.zipFolder(outPath + sep + extFolder, outPath + sep + extFolder + ".zip");
+            MyCommonMethods.deleteDir(outFolder, null);
+        }
     }
 }

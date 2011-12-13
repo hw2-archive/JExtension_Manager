@@ -81,7 +81,7 @@ public class JFrameMain extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDBList = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jButtonLoadTables = new javax.swing.JButton();
+        jButtonLoadInfo = new javax.swing.JButton();
         jTextFieldXmlPath = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButtonSaveFC = new javax.swing.JButton();
@@ -185,13 +185,13 @@ public class JFrameMain extends javax.swing.JFrame {
         jLabel5.setText("Export tables:");
         jPanelTab1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
 
-        jButtonLoadTables.setText("Load Conf");
-        jButtonLoadTables.addActionListener(new java.awt.event.ActionListener() {
+        jButtonLoadInfo.setText("Load Info");
+        jButtonLoadInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoadTablesActionPerformed(evt);
+                jButtonLoadInfoActionPerformed(evt);
             }
         });
-        jPanelTab1.add(jButtonLoadTables, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 110, -1));
+        jPanelTab1.add(jButtonLoadInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 110, -1));
 
         jTextFieldXmlPath.setText("/home/giuseppe/WORKSPACE/works-www/joomlacms/sorgenti/branches_latest/hw2/administrator/components/com_jce/jce.xml");
         jPanelTab1.add(jTextFieldXmlPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 210, -1));
@@ -312,9 +312,9 @@ public class JFrameMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxZipActionPerformed
 
-    private void jButtonLoadTablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadTablesActionPerformed
+    private void jButtonLoadInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadInfoActionPerformed
         instance.loadInfo(jTextFieldXmlPath.getText(), jTextFieldConfPath.getText());
-    }//GEN-LAST:event_jButtonLoadTablesActionPerformed
+    }//GEN-LAST:event_jButtonLoadInfoActionPerformed
 
     private void jButtonSaveFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveFCActionPerformed
         chooser = new JFileChooser();
@@ -362,12 +362,15 @@ public class JFrameMain extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         instance.tableModelDatabases.cleanList();
+        jTextFieldXmlPath.setText("");
+        jTextFieldConfPath.setText("");
+        jTextFieldOutputPath.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonConfFC1;
     public javax.swing.JButton jButtonExport;
-    private javax.swing.JButton jButtonLoadTables;
+    private javax.swing.JButton jButtonLoadInfo;
     private javax.swing.JButton jButtonSaveFC;
     private javax.swing.JButton jButtonXmlFC;
     private javax.swing.JCheckBox jCheckBox1;
