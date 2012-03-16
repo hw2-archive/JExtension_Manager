@@ -39,6 +39,7 @@ public class ControllerJFrameMain {
     private String extFolder = null;
     private String rootPath = null;
     private String xmlPath = null;
+    private String plgGroup = "";
     MyXML xml = null;
 
     private ControllerJFrameMain() {
@@ -114,6 +115,7 @@ public class ControllerJFrameMain {
                 || xml.getRootNode().getName().equalsIgnoreCase("extension"))) {
 
             String type = xml.getRootNode().getAttributeValue("type");
+            plgGroup = xml.getRootNode().getAttributeValue("group");
             String ver = xml.getRootNode().getAttributeValue("version");
             extClient = xml.getRootNode().getAttributeValue("client");
             Element eName = xml.getFirstElementByTag("name", null);
@@ -132,8 +134,15 @@ public class ControllerJFrameMain {
                 extVer = SharedDefines.emJava_ver.LATEST;
                 extFolder = name;
             }
-
-            rootPath = MyCommonMethods.getParentDirectory(xmlPath, 4);
+            
+            if (!plgGroup.isEmpty())
+                extFolder = plgGroup;
+            
+            // check if xml is not in admin folder. [todo] optimize it
+            if (xml.getFirstElementByTag("administration", null) == null)
+                rootPath = MyCommonMethods.getParentDirectory(xmlPath, 3);
+            else
+                rootPath = MyCommonMethods.getParentDirectory(xmlPath, 4);
 
             if (!confPath.isEmpty()) {
 
@@ -141,7 +150,10 @@ public class ControllerJFrameMain {
                 String password = MyCommonMethods.readPhpConf(confPath, "$password");
                 String dbName = MyCommonMethods.readPhpConf(confPath, "$db");
                 String host = MyCommonMethods.readPhpConf(confPath, "$host");
-
+                
+                if (user.isEmpty() || dbName.isEmpty() || host.isEmpty())
+                    return;
+                
                 propConn = new PropConnection(host, dbName, user, password, true);
 
                 tableModelDatabases.cleanList();
@@ -160,7 +172,7 @@ public class ControllerJFrameMain {
                     frame.jTableDBList.addRowSelectionInterval(coord[1], coord[1]);
                 }
             }
-
+            
             frame.jButtonExport.setEnabled(true);
         }
     }
@@ -224,6 +236,8 @@ public class ControllerJFrameMain {
                 fElements = xml.getElementsByTag("file", fileSection);
             }
             ArrayList<String> files = xml.getElementsValues(fElements, null);
+            
+            
 
             //XXX message box if you want overwrite and remove try catch
             for (String F : folders) {
@@ -273,28 +287,28 @@ public class ControllerJFrameMain {
 
 
         String adminPath = rootPath + sep + "administrator" + sep;
-        String outFolder = outPath + sep + extFolder + sep;
+        String outFolder = outPath + sep + MyCommonMethods.getFileName(xmlPath,".");
 
         // copy the xml also to create the path 
-        MyCommonMethods.deleteDir(outFolder, null);
+        MyCommonMethods.deleteDir(outFolder + sep, null);
         MyCommonMethods.copyFileOrFolder(xmlPath, outFolder + sep + MyCommonMethods.getFullFileName(xmlPath), "");
         if ((new File(outFolder)).exists()) {
             if (extClient != null) {
                 if (extClient.equalsIgnoreCase("administrator")) {
-                    processXml(adminPath, outFolder, true);
+                    processXml(adminPath, outFolder + sep, true);
                 } else {
-                    processXml(rootPath + sep, outFolder, false);
+                    processXml(rootPath + sep, outFolder + sep, false);
                 }
             } else {
-                processXml(adminPath, outFolder, true);
-                processXml(rootPath + sep, outFolder, false);
+                processXml(adminPath, outFolder + sep, true);
+                processXml(rootPath + sep, outFolder + sep, false);
             }
         }
         //XXX to speed up
-        exportTables(outFolder);
+        exportTables(outFolder + sep);
 
         if (isZip) {
-            MyCommonMethods.zipFolder(outPath + sep + extFolder, outPath + sep + extFolder + ".zip");
+            MyCommonMethods.zipFolder(outFolder, outFolder + ".zip");
             MyCommonMethods.deleteDir(outFolder, null);
         }
     }

@@ -13,7 +13,12 @@ package exman.main.view;
 import exman.main.controller.ControllerJFrameMain;
 import hw2.common.MyCommonMethods;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -31,21 +36,39 @@ public class JFrameMain extends javax.swing.JFrame {
         initialize();
 
     }
+    
+    private void checkConf() {
+        if (new File(jTextFieldXmlPath.getText()).exists()) {
+            if (!jCheckBox1.isSelected()) {
+                String confPath = MyCommonMethods.getParentDirectory(jTextFieldXmlPath.getText(), 4) + File.separator + "configuration.php";
+                if (confPath != jTextFieldConfPath.getText()) {
+                    jTextFieldConfPath.setText(confPath);
+                    jButtonExport.setEnabled(false);
+                }
+            }
+        }
+    }
 
     /**
      * Initialize the class.
      */
     private void initialize() {
         // ** inizializzazioni necessarie per visual editor eclipse **
-        setContentPane(jPanelContainer);
+        //setContentPane(jPanelContainer);
         setSize(new java.awt.Dimension(800, 600));
         setPreferredSize(getSize());
         MyCommonMethods.setWindowCenterPosition(this);
         // ** **
 
         setTitle("JExtension Manager");
+        
+        /*try {
+            jTextFieldXmlPath.setText(new File (".").getCanonicalPath());
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        /*for (SharedDefines.emJava_ver L: SharedDefines.emJava_ver.values()) {
+        for (SharedDefines.emJava_ver L: SharedDefines.emJava_ver.values()) {
         jComboBoxVerSelector.addItem(L.version);
         }
         
@@ -54,6 +77,18 @@ public class JFrameMain extends javax.swing.JFrame {
         }*/
 
         jTableDBList.setModel(instance.tableModelDatabases);
+        
+        jTextFieldXmlPath.getDocument().addDocumentListener(new DocumentListener() {
+        public void changedUpdate(DocumentEvent e) {
+            checkConf();
+        }
+        public void removeUpdate(DocumentEvent e) {
+            checkConf();
+        }
+        public void insertUpdate(DocumentEvent e) {
+            checkConf();
+        }
+        });
 
     }
 
@@ -107,11 +142,9 @@ public class JFrameMain extends javax.swing.JFrame {
 
         jPanelTab1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextFieldConfPath.setText("/home/giuseppe/WORKSPACE/works-www/joomlacms/sorgenti/branches_latest/hw2/configuration.php");
         jTextFieldConfPath.setEnabled(false);
         jPanelTab1.add(jTextFieldConfPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 210, 20));
 
-        jTextFieldOutputPath.setText("/home/giuseppe/Scrivania/WORKS_TEMP/comtest");
         jTextFieldOutputPath.setName("jTextFieldOutputPath"); // NOI18N
         jTextFieldOutputPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,8 +225,6 @@ public class JFrameMain extends javax.swing.JFrame {
             }
         });
         jPanelTab1.add(jButtonLoadInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 110, -1));
-
-        jTextFieldXmlPath.setText("/home/giuseppe/WORKSPACE/works-www/joomlacms/sorgenti/branches_latest/hw2/administrator/components/com_jce/jce.xml");
         jPanelTab1.add(jTextFieldXmlPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 210, -1));
 
         jLabel6.setText("Manifest (xml) file");
@@ -275,23 +306,22 @@ public class JFrameMain extends javax.swing.JFrame {
     private void jButtonXmlFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonXmlFCActionPerformed
         chooser = new JFileChooser();
         String path = jTextFieldXmlPath.getText().isEmpty() ? "." : jTextFieldXmlPath.getText();
-        chooser.setCurrentDirectory(new java.io.File(path));
+        File f = new java.io.File(MyCommonMethods.getPath(path));
+        if (f.exists())
+            try {
+                chooser.setCurrentDirectory(f.getCanonicalFile());
+            } catch (IOException ex) {
+                Logger.getLogger(JFrameMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
         chooser.setDialogTitle("Select where the root path..");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //
         // disable the "All files" option.
         //
         chooser.setAcceptAllFileFilterUsed(false);
-        //    
+        
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             jTextFieldXmlPath.setText(chooser.getSelectedFile().getPath());
-            jButtonExport.setEnabled(false);
-
-            if (!jCheckBox1.isSelected()) {
-                String confPath = MyCommonMethods.getParentDirectory(jTextFieldXmlPath.getText(), 4) + File.separator + "configuration.php";
-                jTextFieldConfPath.setText(confPath);
-            }
-
         } else {
             System.out.println("No Selection ");
         }
@@ -319,7 +349,13 @@ public class JFrameMain extends javax.swing.JFrame {
     private void jButtonSaveFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveFCActionPerformed
         chooser = new JFileChooser();
         String path = jTextFieldOutputPath.getText().isEmpty() ? "." : jTextFieldOutputPath.getText();
-        chooser.setCurrentDirectory(new java.io.File(path));
+        File f = new java.io.File(MyCommonMethods.getPath(path));
+        if (f.exists())
+            try {
+                chooser.setCurrentDirectory(f.getCanonicalFile());
+            } catch (IOException ex) {
+                Logger.getLogger(JFrameMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
         chooser.setDialogTitle("Select where to save..");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         //
@@ -337,7 +373,14 @@ public class JFrameMain extends javax.swing.JFrame {
     private void jButtonConfFC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfFC1ActionPerformed
         chooser = new JFileChooser();
         String path = jTextFieldConfPath.getText().isEmpty() ? "." : jTextFieldConfPath.getText();
-        chooser.setCurrentDirectory(new java.io.File(path));
+        File f = new java.io.File(MyCommonMethods.getPath(path));
+        if (f.exists())
+            try {
+                chooser.setCurrentDirectory(f.getCanonicalFile());
+            } catch (IOException ex) {
+                Logger.getLogger(JFrameMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         chooser.setDialogTitle("Select the site configuration file..");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //
@@ -366,6 +409,7 @@ public class JFrameMain extends javax.swing.JFrame {
         jTextFieldConfPath.setText("");
         jTextFieldOutputPath.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonConfFC1;

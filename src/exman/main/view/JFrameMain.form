@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -75,7 +75,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="jTextFieldConfPath">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="/home/giuseppe/WORKSPACE/works-www/joomlacms/sorgenti/branches_latest/hw2/configuration.php"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Constraints>
@@ -86,7 +85,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldOutputPath">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="/home/giuseppe/Scrivania/WORKS_TEMP/comtest"/>
                     <Property name="name" type="java.lang.String" value="jTextFieldOutputPath" noResource="true"/>
                   </Properties>
                   <Events>
@@ -237,9 +235,6 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldXmlPath">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="/home/giuseppe/WORKSPACE/works-www/joomlacms/sorgenti/branches_latest/hw2/administrator/components/com_jce/jce.xml"/>
-                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="20" y="60" width="210" height="-1"/>
